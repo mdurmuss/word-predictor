@@ -1,14 +1,29 @@
+
+
 # word-predictor
+
 Bir kelimenin ardından hangi kelimelerin gelebileceğini gösteren basit bir **n-gram** modeli.
+
+### Demo
+
+[Link](https://arcane-scrubland-44556.herokuapp.com/) üzerinden uygulamayı test edebilirsiniz.
 
 ### Kullanım
 
-Repoyu indirdikten sonra gerekli kütüphaneleri **requirements.txt** ile kurabilirsiniz. Ardından aşağıdaki komutları girin ve [http://localhost:5000](http://localhost:5000/) üzerinde uygulamayı görüntüleyin.
+Repoyu indirdikten sonra gerekli kütüphaneleri **requirements.txt** ile kurabilirsiniz.
+
+```shell
+pip install -r requirements.txt
+```
+
+Flask'ın çalışması için komutları girin.
 
 ```shell
 export FLASK_APP=app.py
 flask run
 ```
+
+Şimdi tarayıcınızda `localhost:5000` ziyaret edin. :tada:
 
 ![](./images/img1.png)
 
