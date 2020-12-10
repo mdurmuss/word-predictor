@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 # Author: Mustafa Durmuş [mustafa-durmuss@outlook.com]
 
-
+import re
 from collections import Counter
-
+import string
 
 CORPUS_PATH = "./datasets/little_prince.txt"
 
@@ -22,9 +22,8 @@ class WordPredictor():
             corpus = file.read().replace('\n', '')
 
         # noktalama işaretlerini silelim.
-        puncts = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~'
-        for punct in puncts:
-            corpus = corpus.replace(punct, ' ')
+        # regex kullanalım. :tada:
+        corpus = re.sub(r'[^\w\s]', '', corpus)
 
         # tüm kelimeleri metinde görünme sayılarıyla beraber tutalım.
         word_list = dict(Counter(corpus.lower().split()))
@@ -45,14 +44,14 @@ class WordPredictor():
                     is_exist = self.dict.get(token).get(next_word)
                     # ilk kez sözlüğe ekleniyorsa değer     None geliyor.
                     # Bu sebeple or kapısı kullanıldı.
-                    self.dict[token][next_word] = round(number=(1 / value) +(is_exist or 0),
+                    self.dict[token][next_word] = round(number=(1 / value) + (is_exist or 0),
                                                         ndigits=4)
 
     def predict(self, input_word, number=5, return_flag=False):
         try:
-            input_result = sorted(self.dict[input_word.lower()].items(), key=lambda k: k[1], reverse=True)
+            input_result = sorted(self.dict[input_word.lower()].items(),
+                                  key=lambda k: k[1], reverse=True)
         except KeyError as e:
-
             # böyle bir kelime sözlükte bulunmadı.
             return False
 
