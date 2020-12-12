@@ -22,11 +22,21 @@
 
 
         </form>
-        {% if todos == false%}
+        {% if is_in_dict_flag == false%}
           <div class="alert alert-danger" role="alert">
             No such word found in the dictionary.
           </div>
-        {% elif not todos == [] %}
+
+          {% if did_u_mean_words != none%}          
+          <p>Did you mean? </p>
+          <form action="/test_add " method = "post">
+          {% for word in did_u_mean_words %}
+                    <button name="test_button" type = "submit" class="btn btn-outline-success" value="{{word}}">{{word}}</button>
+          {% endfor %}      
+          </form>
+          {% endif %}
+        
+          {% elif not todos == [] %}
             <table class="table">
               <thead>
                 <tr>
