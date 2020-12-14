@@ -4,20 +4,12 @@
 
 from flask import Flask, render_template, redirect, url_for, request
 
-# insert path for predicting word.
-import sys
-sys.path.insert(1, '/home/hummingbird/Desktop/MD/github/word-predictor')
 from predictor import WordPredictor
 from spell_check import spell_checking
 
+# creating the flask app.
 app = Flask(__name__)
 
-predictor = WordPredictor('./corpora/little_prince.txt')
-
-result = []
-word = ""
-is_in_dict_flag = True
-did_u_mean_words = []
 
 @app.route("/")
 def index():
@@ -55,4 +47,12 @@ def test_button():
 
 
 if __name__ == "__main__":
+
+    # these variables should be global.
+    result = []
+    word = ""
+    is_in_dict_flag = True
+    did_u_mean_words = []
+    predictor = WordPredictor('./corpora/little_prince.txt')
+
     app.run(debug=True)
