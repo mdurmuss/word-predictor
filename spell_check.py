@@ -4,8 +4,10 @@
 
 
 from predictor import WordPredictor
+from functools import lru_cache
 
 
+@lru_cache()
 def iterative_levenshtein(s, t, costs=(1, 1, 2)):
     """
         iterative_levenshtein(s, t) -> ldist
