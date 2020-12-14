@@ -8,52 +8,21 @@ from functools import lru_cache
 
 
 @lru_cache()
-def iterative_levenshtein(s, t, costs=(1, 1, 2)):
-    """
-        iterative_levenshtein(s, t) -> ldist
-        ldist is the Levenshtein distance between the strings
-        s and t.
-        For all i and j, dist[i,j] will contain the Levenshtein
-        distance between the first i characters of s and the
-        first j characters of t
+def find_levenshtein_distance(s, t):
+    if s == "":
+        return len(t)
+    if t == "":
+        return len(s)
+    if s[-1] == t[-1]:
+        cost = 0
+    else:
+        cost = 2  # substitutes is 2.
 
-        costs: a tuple or a list with three integers (d, i, s)
-               where d defines the costs for a deletion
-                     i defines the costs for an insertion and
-                     s defines the costs for a substitution
-    """
+    res = min([find_levenshtein_distance(s[:-1], t)+1,
+               find_levenshtein_distance(s, t[:-1])+1,
+               find_levenshtein_distance(s[:-1], t[:-1]) + cost])
 
-    rows = len(s)+1
-    cols = len(t)+1
-    deletes, inserts, substitutes = costs
-
-    dist = [[0 for x in range(cols)] for x in range(rows)]
-
-    # source prefixes can be transformed into empty strings
-    # by deletions:
-    for row in range(1, rows):
-        dist[row][0] = row * deletes
-
-    # target prefixes can be created from an empty source string
-    # by inserting the characters
-    for col in range(1, cols):
-        dist[0][col] = col * inserts
-
-    for col in range(1, cols):
-        for row in range(1, rows):
-            if s[row-1] == t[col-1]:
-                cost = 0
-            else:
-                cost = substitutes
-            dist[row][col] = min(dist[row-1][col] + deletes,
-                                 dist[row][col-1] + inserts,
-                                 dist[row-1][col-1] + cost)  # substitution
-
-    # printing env.
-    # for r in range(rows):
-    #     print(dist[r])
-
-    return dist[row][col]
+    return res
 
 
 def spell_checking(inp_word, predictor):
@@ -63,7 +32,7 @@ def spell_checking(inp_word, predictor):
 
     result_dict = {}
     for idx, word in enumerate(words):
-        distance = iterative_levenshtein(inp_word, word)  # mesafeyi bul.
+        distance = find_levenshtein_distance(inp_word, word)  # mesafeyi bul.
         if distance in [1, 2, 3]:  # sadece 1-2-3 mesafelerindeki kelimeleri kaydet.
             result_dict.setdefault(str(distance), []).append(idx)  # bir key için birden fazla value eklemek.
 
