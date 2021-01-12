@@ -6,7 +6,7 @@ import re
 from collections import Counter
 import string
 
-CORPUS_PATH = "./datasets/little_prince.txt"
+CORPUS_PATH = "./corpora/little_prince.txt"
 
 
 class WordPredictor():
