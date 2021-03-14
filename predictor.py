@@ -3,20 +3,27 @@
 # Author: Mustafa Durmuş [mustafa-durmuss@outlook.com]
 
 import re
-from collections import Counter
-import string
+from collections import Counter, defaultdict
 
 CORPUS_PATH = "./corpora/little_prince.txt"
 
 
-class WordPredictor():
+class WordPredictor:
 
     def __init__(self, corpus_path):
         self.corpus_path = corpus_path
+        self.dict = defaultdict(dict)
         self.process_corpus()
+        self.this_text = []
+
+    def find_indices(self, word):
+        """
+        Kelimenin kelime listesinde geçtiği tüm indeksleri döndürür.
+        :param word: ilgili kelime.
+        """
+        return [i for i, x in enumerate(self.this_text) if x == word]
 
     def process_corpus(self):
-
         # get corpus and delete newlines.
         with open(self.corpus_path, 'r') as file:
             corpus = file.read().replace('\n', '')
@@ -27,25 +34,21 @@ class WordPredictor():
 
         # tüm kelimeleri metinde görünme sayılarıyla beraber tutalım.
         word_list = dict(Counter(corpus.lower().split()))
-        self.dict = {}
 
-        this_text = corpus.lower().split()
+        self.this_text = corpus.lower().split()
 
-        for token, value in word_list.items():
-            # ilgili kelime için sözlükte yer oluşturalım.
-            self.dict[token] = {}
-            for idx, word in enumerate(this_text):
-                if word == token:
-                    try:
-                        next_word = this_text[idx + 1]
-                    except IndexError as e:
-                        continue
-
-                    is_exist = self.dict.get(token).get(next_word)
-                    # ilk kez sözlüğe ekleniyorsa değer     None geliyor.
-                    # Bu sebeple or kapısı kullanıldı.
-                    self.dict[token][next_word] = round(number=(1 / value) + (is_exist or 0),
-                                                        ndigits=4)
+        for word, value in word_list.items():
+            for idx in self.find_indices(word):
+                try:
+                    next_word = self.this_text[idx + 1]
+                    # eğer word'den sonra next_word daha önce geldiyse 1 gelmediyse 0 atar.
+                    # doğal halinde NoneType dönüyor, aşağıdaki toplamında hata alınıyor.
+                    is_exist = (self.dict.get(word).get(next_word) or 0)
+                except AttributeError:  
+                    is_exist = 0
+                except IndexError:  # sonraki index sınırı aşarsa.
+                    continue
+                self.dict[word][next_word] = round((1 / value) + is_exist, 4)
 
     def predict(self, input_word, number=5, return_flag=False):
         try:
