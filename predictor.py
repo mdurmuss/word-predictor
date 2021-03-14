@@ -44,7 +44,7 @@ class WordPredictor:
                     # eğer word'den sonra next_word daha önce geldiyse 1 gelmediyse 0 atar.
                     # doğal halinde NoneType dönüyor, aşağıdaki toplamında hata alınıyor.
                     is_exist = (self.dict.get(word).get(next_word) or 0)
-                except AttributeError:  
+                except AttributeError:
                     is_exist = 0
                 except IndexError:  # sonraki index sınırı aşarsa.
                     continue
