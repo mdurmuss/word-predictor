@@ -29,7 +29,7 @@ flask run
 
 ### Gerekli Düzenlemeler
 
-- [ ] CI&CD Eklentisi
+- [x] CI&CD Eklentisi
 - [x] Kullanıcıdan girdi olarak kelime alınmalı ve en yüksek 3 ihtimalli kelime gösterilmeli.
 - [x] Flask ile web üzerinde çalıştırma.
 - [x] Kelime Düzeltimi (spell checking)​
