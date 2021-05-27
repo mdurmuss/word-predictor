@@ -29,6 +29,7 @@ flask run
 
 ### Gerekli Düzenlemeler
 
+- [ ] app.py dosyasındaki fonksiyonların bölünmesi ve ayrı dosyalarda tutulması.
 - [x] CI&CD Eklentisi
 - [x] Kullanıcıdan girdi olarak kelime alınmalı ve en yüksek 3 ihtimalli kelime gösterilmeli.
 - [x] Flask ile web üzerinde çalıştırma.
