@@ -37,3 +37,4 @@ flask run
 - [ ] Veriseti büyütülmeli.
 - [ ] Birden fazla kelime ile tahmin yapma. (unigram-trigram ..)
 - [ ] Kelime kelime ayırım yaparken noktalama işaretleri siliniyor. Ancak nokta'dan sonra gelen kelime ile noktadan önce gelen kelime aslında komşu değildir. Düzeltilmesi gerekiyor. :warning:
+- [ ] Demo olarak bir kelime girince en az 10 kelimelik bir cümle oluşturalım kelimeleri birbirine bağlayarak.
