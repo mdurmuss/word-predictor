@@ -6,17 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <title>Bay Tahmin</title>
+    <title>Word Estimator</title>
 </head>
 <body>
     <div style = "margin-top: 100px;" class = "container" >
-        <h3>Bay Tahmin</h3>
+        <h3>Word Estimator</h3>
         <hr>
 
         <form action="/add" method = "post">
             <div class="form-group">
-                    <input type="text" class="form-control" name = "title" id="formGroupExampleInput" placeholder="Bir kelime gir.." autocomplete="off"><br>
-                    <button type = "submit" class="btn btn-primary">Tahmin Et</button>
+                    <input type="text" class="form-control" name = "title" id="formGroupExampleInput" placeholder="Enter a word.." autocomplete="off"><br>
+                    <button type = "submit" class="btn btn-primary">Predict</button>
             </div>
             <hr>
 
@@ -24,11 +24,11 @@
         </form>
         {% if is_in_dict_flag == false%}
           <div class="alert alert-danger" role="alert">
-            Bu kelime sözlükte bulunamadı.
+            Not found this word on dictionary.
           </div>
 
           {% if did_u_mean_words != none%}          
-          <p>Bunu mu demek istedin? </p>
+          <p>Did you mean?</p>
           <form action="/test_add " method = "post">
           {% for word in did_u_mean_words %}
                     <button name="test_button" type = "submit" class="btn btn-outline-success" value="{{word}}">{{word}}</button>
@@ -40,8 +40,8 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col">Tahmin</th>
-                  <th scope="col">Olasılık</th>
+                  <th scope="col">Prediction</th>
+                  <th scope="col">Probability</th>
                 </tr>
               </thead>
               <tbody>
